@@ -2,7 +2,7 @@
 Algoritmo de Preenchimento de Polígonos com Coerência de Arestas.
 ## Alunos
 - Rebeca Vieira Carvalho | NUSP 12543530 
-- Murilo ... | NUSP XXXXXXX
+- Murilo Cury Pontes | NUSP 13830417
 
 ## Descrição
 Implementação do algoritmo de preenchimento de polígonos que utiliza a **coerência de arestas**, por meio das estruturas:
