@@ -1,9 +1,18 @@
+##### TODOS: #####
+#   Permitir múltiplos polígonos (cada polígono deve armazenar sua cor)
+#   Criar classe polígono
+
+
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
+from button import *
+
 
 poligono = []
 filled_segments = []
+buttons = []
+chosen_color = colors['white']
 
 def get_edges(vertex, adjacent):
     
@@ -115,7 +124,7 @@ def polygon_filling(polygon):
 
 def trace_scan_lines():
     glBegin(GL_POINTS)
-    glColor3f(1.0, 1.0, 1.0)
+    glColor3f(*chosen_color)
     for y, x1, x2 in filled_segments:
         for x in range(x1, x2 + 1):
             glVertex2f(x, y)
@@ -138,19 +147,32 @@ def draw_polygon(polygon):
     if len(polygon) < 2:
         return
     
-    print("ENTROU AQUI")
     trace_line(polygon[0], polygon[len(polygon) - 1])
     for i in range(len(polygon) - 1):
         trace_line(polygon[i], polygon[i+1])
 
-        
+
 def mouse(button, state, x, y):
+    global chosen_color
     if button == GLUT_LEFT_BUTTON and state == GLUT_DOWN:
-        # Cria o polígono
         height = glutGet(GLUT_WINDOW_HEIGHT)
-        point = [x, height - y]
-        print(point)
-        poligono.append(point)
+        clicked_button = get_clicked_button(x,height - y, buttons)
+        # verifica se clicou em um botao
+        if clicked_button != None:
+            if(clicked_button.shape == 'square'):
+                # Limpa tela
+                poligono.clear()
+                filled_segments.clear()
+            elif clicked_button.shape == 'circle':
+                # Troca cor polígono
+                chosen_color = clicked_button.color
+        else:
+            # Cria o polígono
+            height = glutGet(GLUT_WINDOW_HEIGHT)
+            point = [x, height - y]
+            print(point)
+            poligono.append(point)
+
         glutPostRedisplay()
 
     elif button == GLUT_RIGHT_BUTTON and state == GLUT_DOWN:
@@ -164,19 +186,38 @@ def display():
     glClear(GL_COLOR_BUFFER_BIT)
     draw_polygon(poligono)
     trace_scan_lines()
+    # Desenha selecao de cor
+    draw_button(button('circle', chosen_color, choice = True), buttons)
+    # Desenha botões
+    for button_element in buttons:
+        draw_button(button_element)
+        
     glFlush()
 
 def main():
     glutInit()
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB)
-    glutInitWindowSize(600, 600)
+
+    screen_width = glutGet(GLUT_SCREEN_WIDTH)
+    screen_height = glutGet(GLUT_SCREEN_HEIGHT)
+
+    window_width = screen_width - 100  
+    window_height = screen_height - 100
+    
+    glutInitWindowSize(window_width, window_height)
+    glutInitWindowPosition(50, 50)  
     glutCreateWindow(b"Trabalho 1")
+    
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    gluOrtho2D(0, 600, 0, 600)
+
+    gluOrtho2D(0, window_width, 0, window_height)
     glMatrixMode(GL_MODELVIEW)
     glutDisplayFunc(display)
     glutMouseFunc(mouse)
+
+    set_buttons(buttons)
+
     glutMainLoop()
     return 0
 
