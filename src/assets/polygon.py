@@ -45,14 +45,25 @@ class Polygon():
 
     
     def check_inside_polygon(self, x, y):
-        if not self.vertices:
+        if not self.vertices or len(self.vertices) < 3:
             return False
         
-        min_x = min(v[0] for v in self.vertices)
-        max_x = max(v[0] for v in self.vertices)
-        min_y = min(v[1] for v in self.vertices)
-        max_y = max(v[1] for v in self.vertices)
-
-        click_x, click_y = x, y
+        intersections = 0
+        n = len(self.vertices)
         
-        return min_x <= click_x <= max_x and min_y <= click_y <= max_y
+        for i in range(n):
+            x1, y1 = self.vertices[i]
+            x2, y2 = self.vertices[(i + 1) % n]
+            
+            if y1 == y2:
+                continue
+            # para estar no meio é um xor (sp 1 é maior)
+            if (y1 > y) != (y2 > y):
+                #  x em que a reta horizontal mouse intercepta a aresta
+                x_intersect = x1 + (y - y1) * (x2 - x1) / (y2 - y1)
+                
+                # valida se a interseção foi à direita
+                if x_intersect > x:
+                    intersections += 1
+        
+        return intersections % 2 == 1
