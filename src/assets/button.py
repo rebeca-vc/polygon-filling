@@ -3,7 +3,7 @@ from OpenGL.GLU import *
 from OpenGL.GLUT import *
 import math
 
-class button:
+class Button:
     def __init__(self, shape, color, x = None, y = None, text = None, choice = False):
         self.shape = shape
         self.text = text
@@ -46,7 +46,7 @@ def set_buttons(buttons):
         column = i % 3
         line = int(i / 3)
         colors_list = list(colors.values())
-        buttons.append(button('circle', colors_list[i], 
+        buttons.append(Button('circle', colors_list[i], 
                               grid_initial_x - circles_offset * column, 
                               grid_initial_y + circles_offset * line))
 
@@ -55,7 +55,7 @@ def set_buttons(buttons):
     x_square = grid_initial_x - 3 * circles_offset - square_offset
     y_square = grid_initial_y + circles_offset/2
 
-    buttons.append(button('square', colors['gray'], x_square, y_square, "CLEAR"))
+    buttons.append(Button('square', colors['gray'], x_square, y_square, "CLEAR"))
 
 
 def draw_centered_text(center_x, center_y, text, font=GLUT_BITMAP_HELVETICA_12):
@@ -123,7 +123,6 @@ def get_clicked_button(x, y, buttons):
         if(button.is_inside(x, y)):
             return button
     return None
-
 
 # pode ser usado para botões quadrados de cores diferentes também
 def find_chosen_button(choice_button, buttons):
