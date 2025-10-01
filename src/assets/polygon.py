@@ -21,9 +21,11 @@ class Polygon():
         self.filled_segments = polygon_filling(self.vertices)
         self.color = color
 
-    def draw_edges(self):
+    def draw_edges(self, current_line_thickness):
         if len(self.vertices) < 2:
             return
+        
+        glLineWidth(current_line_thickness)
         glColor3f(1.0, 1.0, 1.0)
         glBegin(GL_LINES)
         for i in range(len(self.vertices)):

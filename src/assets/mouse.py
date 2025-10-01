@@ -2,6 +2,8 @@ from OpenGL.GLUT import *
 from .polygon import Polygon
 from .button import get_clicked_button
 
+current_line_thickness = 1.0
+
 def mouse(button, state, x, y, polygons, buttons, chosen_color_ref):
     global chosen_color
     if button == GLUT_LEFT_BUTTON and state == GLUT_DOWN:
@@ -51,3 +53,14 @@ def mouse(button, state, x, y, polygons, buttons, chosen_color_ref):
         
         glutPostRedisplay()
 
+def scroll(wheel, direction, x, y, polygons):
+    global current_line_thickness
+
+    if direction > 0:
+        current_line_thickness += 0.5
+    else:
+        current_line_thickness -= 0.5
+    
+    current_line_thickness = max(0.5, min(10.0, current_line_thickness))
+    
+    glutPostRedisplay()
