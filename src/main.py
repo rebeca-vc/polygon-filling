@@ -1,7 +1,7 @@
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
-
+import numpy as np
 from assets.polygon import Polygon
 from assets import mouse
 from assets.button import *
@@ -9,11 +9,12 @@ from assets.button import *
 polygons = []
 buttons = []
 chosen_color = [colors['white']]
+current_line_thickness = [1.0]
 
 def display():
     glClear(GL_COLOR_BUFFER_BIT)
     for poly in polygons:
-        poly.draw_edges(mouse.current_line_thickness)
+        poly.draw_edges(current_line_thickness[0])
         poly.draw_fill()
 
     draw_button(Button('circle', chosen_color[0], choice=True), buttons)
@@ -43,7 +44,7 @@ def main():
     glMatrixMode(GL_MODELVIEW)
 
     glutDisplayFunc(display)
-    glutMouseFunc(lambda b, s, x, y: mouse.mouse(b, s, x, y, polygons, buttons, chosen_color))
+    glutMouseFunc(lambda b, s, x, y: mouse.mouse(b, s, x, y, polygons, buttons, chosen_color, current_line_thickness))
     glutMouseWheelFunc(lambda wheel, direction, x, y: mouse.scroll(wheel, direction, x, y, polygons))
 
     set_buttons(buttons)

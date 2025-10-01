@@ -2,9 +2,7 @@ from OpenGL.GLUT import *
 from .polygon import Polygon
 from .button import get_clicked_button
 
-current_line_thickness = 1.0
-
-def mouse(button, state, x, y, polygons, buttons, chosen_color_ref):
+def mouse(button, state, x, y, polygons, buttons, chosen_color_ref, current_line_thickness_ref):
     global chosen_color
     if button == GLUT_LEFT_BUTTON and state == GLUT_DOWN:
         height = glutGet(GLUT_WINDOW_HEIGHT)
@@ -12,10 +10,16 @@ def mouse(button, state, x, y, polygons, buttons, chosen_color_ref):
 
         # verifica se clicou em um botao
         if clicked_button != None:
-            if(clicked_button.shape == 'square'):
-                # Limpa tela
-                for poly in polygons:
-                    poly.clear()
+            if clicked_button.text == "CLEAR":
+                    # limpar tela
+                    for poly in polygons:
+                        poly.clear()
+            elif clicked_button.text == "+":
+                # aumentar espessura
+                current_line_thickness_ref[0] = min(10.0, current_line_thickness_ref[0] + 0.5)
+            elif clicked_button.text == "-":
+                # diminuir espessura
+                current_line_thickness_ref[0] = max(0.5, current_line_thickness_ref[0] - 0.5)
                     
             elif clicked_button.shape == 'circle':
                 # Troca cor polígono
@@ -48,19 +52,6 @@ def mouse(button, state, x, y, polygons, buttons, chosen_color_ref):
         
         # Cria novo polígono
         if first_fill:
-            print("Novo Polygon")
             polygons.append(Polygon(chosen_color_ref[0]))
         
         glutPostRedisplay()
-
-def scroll(wheel, direction, x, y, polygons):
-    global current_line_thickness
-
-    if direction > 0:
-        current_line_thickness += 0.5
-    else:
-        current_line_thickness -= 0.5
-    
-    current_line_thickness = max(0.5, min(10.0, current_line_thickness))
-    
-    glutPostRedisplay()

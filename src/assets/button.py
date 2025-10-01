@@ -57,6 +57,12 @@ def set_buttons(buttons):
 
     buttons.append(Button('square', colors['gray'], x_square, y_square, "CLEAR"))
 
+    # botão aumentar espessura
+    buttons.append(Button('square', colors['gray'], x_square + 70, y_square - 60, "+"))
+
+    # botão diminuir espessura
+    buttons.append(Button('square', colors['gray'], x_square + 130, y_square - 60, "-"))
+
 
 def draw_centered_text(center_x, center_y, text, font=GLUT_BITMAP_HELVETICA_12):
     # calcula comprimento e altura aprox do texto

@@ -1,4 +1,5 @@
 from OpenGL.GL import *
+import math
 from .filling import polygon_filling
 
 
@@ -25,14 +26,34 @@ class Polygon():
         if len(self.vertices) < 2:
             return
         
-        glLineWidth(current_line_thickness)
         glColor3f(1.0, 1.0, 1.0)
-        glBegin(GL_LINES)
+
+        half_w = current_line_thickness / 2.0
+
+        glBegin(GL_QUADS)
         for i in range(len(self.vertices)):
             x1, y1 = self.vertices[i]
             x2, y2 = self.vertices[(i + 1) % len(self.vertices)]
-            glVertex2f(x1, y1)
-            glVertex2f(x2, y2)
+
+            dx = x2 - x1
+            dy = y2 - y1
+            length = math.sqrt(dx * dx + dy * dy)
+            if length == 0:
+                continue
+
+            # Vetor perpendicular normalizado
+            nx = -dy / length
+            ny = dx / length
+
+            # deslocamento para dar espessura
+            offset_x = nx * half_w
+            offset_y = ny * half_w
+
+            # 4 vértices do retângulo
+            glVertex2f(x1 + offset_x, y1 + offset_y)
+            glVertex2f(x1 - offset_x, y1 - offset_y)
+            glVertex2f(x2 - offset_x, y2 - offset_y)
+            glVertex2f(x2 + offset_x, y2 + offset_y)
         glEnd()
     
     def draw_fill(self):

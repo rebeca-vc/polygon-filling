@@ -57,8 +57,6 @@ def polygon_filling(polygon):
                 ET[polygon[i][1]] += edges
             else:
                 ET[polygon[i][1]] = edges
-    
-    print(ET)
 
     if not ET:
         return
