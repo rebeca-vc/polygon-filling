@@ -1,26 +1,20 @@
 def get_edges(vertex, adjacent):
     
-    if vertex[1] <= adjacent[1]:
-
-        if vertex[1] >= adjacent[1]:
-            xmax = vertex[0]
-            ymax = vertex[1]
-            xmin = adjacent[0]
-            ymin = adjacent[1]
-        else:
-            xmax = adjacent[0]
-            ymax = adjacent[1]
-            xmin = vertex[0]
-            ymin = vertex[1]
-
-        inclination = 0 
-        if (xmax - xmin) != 0 and (ymax - ymin) != 0:
-            m = (ymax - ymin) / (xmax - xmin)
-            inclination = 1/m
-
-        return [ymax, xmin, inclination]
+    if vertex[1] >= adjacent[1]:
+        return None   
     
-    return None
+    xmax = adjacent[0]
+    ymax = adjacent[1]
+    xmin = vertex[0]
+    ymin = vertex[1]
+
+    inclination = 0 
+    if (xmax - xmin) != 0 and (ymax - ymin) != 0:
+        m = (ymax - ymin) / (xmax - xmin)
+        inclination = 1/m
+
+    return [ymax, xmin, inclination]
+    
     
 
 def get_edges_list(polygon, index):
