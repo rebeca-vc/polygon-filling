@@ -1,7 +1,6 @@
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
-import numpy as np
 from assets.polygon import Polygon
 from assets import mouse
 from assets.button import *
