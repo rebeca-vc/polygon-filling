@@ -29,10 +29,17 @@ https://github.com/rebeca-vc/polygon-filling).
 
 
 ## Execução 
-Para executar o código em sua máquina execute os seguintes comandos:
+Para executar o código em sua máquina execute o seguinte comando na pasta raiz:
 
 ```
 python install.py
 ```
 
-Siga as instruções mostradas no final da execução desse arquivo. 
+Siga as instruções mostradas no final da execução. 
+
+> Obs.: Caso você esteja utilizando o Wsl, talvez seja necessário setar as variáveis de ambiente MUJOCO_GL e PYOPENGL_PLATFORM para glx:
+
+```
+export MUJOCO_GL=glx
+export PYOPENGL_PLATFORM=glx
+```
