@@ -22,3 +22,17 @@ A interface do sistema deve:
 
 ## Testes
 - O sistema deve ser testado para **polígonos simples e complexos**, demonstrando a validade da implementação.  
+
+## Github
+O código fonte do projeto está disponível no [Github](
+https://github.com/rebeca-vc/polygon-filling).
+
+
+## Execução 
+Para executar o código em sua máquina execute os seguintes comandos:
+
+```
+python install.py
+```
+
+Siga as instruções mostradas no final da execução desse arquivo. 
